@@ -1,6 +1,6 @@
 <?php
 
-namespace ApiInteraction;
+namespace MarksIhor\ApiInteraction;
 
 use Illuminate\Support\ServiceProvider;
 

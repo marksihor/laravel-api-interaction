@@ -19,13 +19,13 @@
   },
   "autoload": {
     "psr-4": {
-      "ApiInteraction\\": "src/"
+      "MarksIhor\\ApiInteraction\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "ApiInteraction\\ApiInteractionServiceProvider"
+        "MarksIhor\\ApiInteraction\\ApiInteractionServiceProvider"
       ]
     }
   }
