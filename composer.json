@@ -1,0 +1,32 @@
+{
+  "name": "marksihor/laravel-api-interaction",
+  "description": "Interact with Laravel Applications via Passport Authorized requests (using client_credentials passport token)",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "php"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ihor Korotkyi",
+      "email": "marks.ihor@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "ApiInteraction\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ApiInteraction\\ApiInteractionServiceProvider"
+      ]
+    }
+  }
+}
