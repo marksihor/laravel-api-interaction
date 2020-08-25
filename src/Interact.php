@@ -19,10 +19,8 @@ class Interact
 
     public function post(string $uri, ?array $postData = [], ?array $headers = [])
     {
-        $url = str_replace('//', '/', $this->apiUrl . '/' . $uri);
-
         $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
-            ->post($url, $postData);
+            ->post($this->getUrl($uri), $postData);
 
         return $response->json();
     }
@@ -30,7 +28,7 @@ class Interact
     public function get(string $uri, ?array $data = [], ?array $headers = [])
     {
         $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
-            ->get($uri, array_merge($data, ['paginationUrl' => request()->url()]));
+            ->get($this->getUrl($uri), array_merge($data, ['paginationUrl' => request()->url()]));
 
         return $response->json();
     }
@@ -42,5 +40,10 @@ class Interact
             'Accept' => 'application/json',
             'x-api-key' => $this->clientCredentials['clientId'] ?? ''
         ];
+    }
+
+    private function getUrl(string $uri): string
+    {
+        return str_replace('//', '/', $this->apiUrl . '/' . $uri);
     }
 }
