@@ -27,6 +27,14 @@ class Interact
         return $response->json();
     }
 
+    public function get(string $uri, ?array $data = [], ?array $headers = [])
+    {
+        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+            ->get($uri, array_merge($data, ['paginationUrl' => request()->url()]));
+
+        return $response->json();
+    }
+
     private function defaultHeaders(): array
     {
         return [
