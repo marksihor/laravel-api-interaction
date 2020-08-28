@@ -33,6 +33,21 @@ class Interact
         return $response->json();
     }
 
+    public function patch(string $uri, array $data, ?array $headers = [])
+    {
+        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+            ->patch($this->getUrl($uri), $data);
+
+        return $response->json();
+    }
+
+    public function delete(string $uri)
+    {
+        $response = Http::withHeaders($this->defaultHeaders())->delete($this->getUrl($uri));
+
+        return $response->json();
+    }
+
     private function defaultHeaders(): array
     {
         return [
