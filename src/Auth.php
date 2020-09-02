@@ -19,7 +19,9 @@ class Auth
             if ($token) {
                 return $token;
             } else {
-                $response = Http::post($apiUrl . '/oauth/token', [
+                $response = Http::withHeaders([
+                    'x-api-key' => $clientId
+                ])->post($apiUrl . '/oauth/token', [
                     'grant_type' => "client_credentials",
                     'client_id' => $clientId,
                     'client_secret' => $clientSecret,
