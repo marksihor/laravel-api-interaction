@@ -6,17 +6,18 @@ use Illuminate\Support\Facades\Http;
 
 class Auth
 {
-    public function getAccessToken(string $apiUrl, array $apiCredentials)
+    public function getAccessToken(string $apiUrl, array $apiCredentials, ?bool $cache = true)
     {
         $clientId = $apiCredentials['clientId'] ?? null;
         $clientSecret = $apiCredentials['clientSecret'] ?? null;
 
         if ($apiUrl && $clientId && $clientSecret) {
-            $cacheKey = md5($apiUrl . $clientId . $clientSecret);
+            if ($cache) {
+                $cacheKey = md5($apiUrl . $clientId . $clientSecret);
+                $token = cache($cacheKey);
+            }
 
-            $token = cache($cacheKey);
-
-            if ($token) {
+            if ($cache && isset($token)) {
                 return $token;
             } else {
                 $response = Http::withHeaders([
@@ -29,9 +30,11 @@ class Auth
                 ]);
 
                 if (isset($response->json()['access_token'])) {
-                    cache([$cacheKey => $response->json()['access_token']], $response->json()['expires_in']);
+                    if ($cache) {
+                        cache([$cacheKey => $response->json()['access_token']], $response->json()['expires_in']);
+                    }
 
-                    return cache($cacheKey);
+                    return $response->json()['access_token'];
                 }
             }
         }
