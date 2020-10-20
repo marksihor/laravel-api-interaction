@@ -19,33 +19,25 @@ class Interact
 
     public function post(string $uri, ?array $postData = [], ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        return Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->post($this->getUrl($uri), $postData);
-
-        return $response->json();
     }
 
     public function get(string $uri, ?array $data = [], ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        return Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->get($this->getUrl($uri), array_merge($data, ['paginationUrl' => request()->url()]));
-
-        return $response->json();
     }
 
     public function patch(string $uri, array $data, ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        return Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->patch($this->getUrl($uri), $data);
-
-        return $response->json();
     }
 
     public function delete(string $uri)
     {
-        $response = Http::withHeaders($this->defaultHeaders())->delete($this->getUrl($uri));
-
-        return $response->json();
+        return Http::withHeaders($this->defaultHeaders())->delete($this->getUrl($uri));
     }
 
     private function defaultHeaders(): array
