@@ -45,7 +45,8 @@ class Interact
         return [
             'Authorization' => 'Bearer ' . $this->accessToken,
             'Accept' => 'application/json',
-            'x-api-key' => $this->clientCredentials['clientId'] ?? ''
+            'x-api-key' => $this->clientCredentials['clientId'] ?? '',
+            'x-api-user-ip' => request()->ip() ?: ''
         ];
     }
 
