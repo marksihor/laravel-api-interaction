@@ -76,15 +76,19 @@ class Interact
     private function logRequest(string $endpoint, string $method, ?array $headers, ?array $requestData, ?Response $response): void
     {
         if (config('laravel_api_interaction.log_requests')) {
-            RequestLog::create([
-                'endpoint' => $endpoint,
-                'method' => $method,
-                'request_headers' => $headers,
-                'request_data' => $requestData,
-                'code' => $response->status(),
-                'response_data' => $response->json(),
-                'from_endpoint' => request()->url()
-            ]);
+            try {
+                RequestLog::create([
+                    'endpoint' => $endpoint,
+                    'method' => $method,
+                    'request_headers' => $headers,
+                    'request_data' => $requestData,
+                    'code' => $response->status(),
+                    'response_data' => $response->json(),
+                    'from_endpoint' => request()->url()
+                ]);
+            } catch (\Exception $exception) {
+                \Log::info($exception->getMessage());
+            }
         }
     }
 }
