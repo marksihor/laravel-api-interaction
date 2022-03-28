@@ -14,6 +14,16 @@ class ApiInteractionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Config
+        $this->publishes([
+            __DIR__ . '/config/' => config_path()
+        ], 'config');
+
+        $this->mergeConfigFrom(__DIR__ . '/config/laravel_api_interaction.php', 'laravel_api_interaction');
+
+        // Migrations
+        $this->publishes([
+            __DIR__ . '/migrations/' => database_path('migrations'),
+        ], 'migrations');
     }
 }
