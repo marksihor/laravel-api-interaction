@@ -21,7 +21,7 @@ class Interact
 
     public function post(string $uri, ?array $postData = [], ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        $response = Http::timeout(180)->withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->post($this->getUrl($uri), $postData);
 
         $this->logRequest($this->getUrl($uri), 'POST', array_merge($this->defaultHeaders(), $headers), $postData, $response);
@@ -31,7 +31,7 @@ class Interact
 
     public function get(string $uri, ?array $data = [], ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        $response = Http::timeout(180)->withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->get($this->getUrl($uri), array_merge($data, ['paginationUrl' => request()->url()]));
 
         $this->logRequest($this->getUrl($uri), 'GET', array_merge($this->defaultHeaders(), $headers), array_merge($data, ['paginationUrl' => request()->url()]), $response);
@@ -41,7 +41,7 @@ class Interact
 
     public function patch(string $uri, array $data, ?array $headers = [])
     {
-        $response = Http::withHeaders(array_merge($this->defaultHeaders(), $headers))
+        $response = Http::timeout(180)->withHeaders(array_merge($this->defaultHeaders(), $headers))
             ->patch($this->getUrl($uri), $data);
 
         $this->logRequest($this->getUrl($uri), 'PATCH', array_merge($this->defaultHeaders(), $headers), $data, $response);
@@ -51,7 +51,7 @@ class Interact
 
     public function delete(string $uri)
     {
-        $response = Http::withHeaders($this->defaultHeaders())->delete($this->getUrl($uri));
+        $response = Http::timeout(180)->withHeaders($this->defaultHeaders())->delete($this->getUrl($uri));
 
         $this->logRequest($this->getUrl($uri), 'DELETE', array_merge($this->defaultHeaders(), $this->defaultHeaders()), null, $response);
 
